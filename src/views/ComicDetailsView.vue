@@ -20,7 +20,8 @@
             <div v-for="j in chapterlist" :key="j.chapter_id" @click="turnToComic(j.chapter_newid)">{{j.chapter_name}}</div>
         </div>
         <div class="footer">
-            <div @click="addShelf">加入书架</div>
+            <div v-if="!ishas" @click="addShelf">加入书架</div>
+            <div v-else @click="delShelf">移出书架</div>
             <div>开始阅读</div>
         </div>
     </div>
@@ -46,6 +47,15 @@ export default {
         console.log(this.$route.query.id);
     },
     computed: {
+        ishas() {
+            let flag = false
+            this.mineComic.forEach(e=>{
+                if(e.id==this.comicId){
+                    flag = true
+                }
+            })
+            return flag
+        },
         infoURL() {
             return `https://www.kanman.com/api/getComicInfoAttribute?comic_id=${this.comicId}`;
         },
@@ -83,10 +93,16 @@ export default {
             })
         },
         addShelf() {
-            this.mineComic.push ({
+            this.mineComic.unshift ({
                 id:this.comicId,
                 name:this.comicName,
             })
+            localStorage.setItem("mineComic", JSON.stringify(this.mineComic));
+        },
+        delShelf() {
+            this.mineComic = this.mineComic.filter((e) => {
+                return e.id != this.comicId;
+            });
             localStorage.setItem("mineComic", JSON.stringify(this.mineComic));
         }
     }
