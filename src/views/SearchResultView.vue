@@ -16,7 +16,6 @@
                   <!-- {{ i.comic_type }} -->
                   </div>
                 <div class="chapter">{{ "更新至  " + i.last_chapter_name }}</div>
-                <!-- <div class="desc">{{ i.comic_shortdesc ? i.comic_shortdesc : i.comic_feature }}</div> -->
             </div>
         </div>
     </div>

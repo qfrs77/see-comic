@@ -23,13 +23,13 @@
             </ul>
             </div>
             <div class="comictopbox">
-                <div class="comictop" v-for="i in comictopInfo" :key="i.comic_id">
+                <div class="comictop" v-for="i in comictopInfo" :key="i.comic_id" @click="turnToComicDetails(i.comic_id,i.comic_name)">
                     <div><img :src="`https://image.yqmh.com/mh/${i.comic_id}.jpg`" alt=""></div>
                     <span>{{i.comic_name}}</span>
                 </div>
             </div>
             <div class="comicotherbox">
-                <div class="comicothers" v-for="(i, index) in comicotherInfo" :key="i.comic_id">
+                <div class="comicothers" v-for="(i, index) in comicotherInfo" :key="i.comic_id" @click="turnToComicDetails(i.comic_id,i.comic_name)">
                     <span>{{index+4}}</span>
                     <div>
                         <span>{{i.comic_name}}</span>
@@ -150,6 +150,15 @@ export default {
         changeTime(time) {
             this.timetype = time
             console.log(this.timetype);
+        },
+        turnToComicDetails(id,name) {
+            this.$router.push({
+                path:'comicdetails',
+                query: {
+                    id: id,
+                    name: name,
+                }
+            })
         }
     }
 }

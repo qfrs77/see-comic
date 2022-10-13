@@ -1,6 +1,6 @@
 <template>
     <div class="shelf">
-        <div class="comic" v-for="i in mineComic" :key="i+i.id">
+        <div class="comic" v-for="i in mineComic" :key="i+i.id" @click="turnToComicDetails(i.id,i.name)">
             <div><img :src="`https://image.yqmh.com/mh/${i.id}.jpg`" alt=""></div>
             <span>{{i.name}}</span>
         </div>
@@ -51,6 +51,15 @@ export default {
                 name:this.comicName,
             })
             localStorage.setItem("mineComic", JSON.stringify(this.mineComic));
+        },
+        turnToComicDetails(id,name) {
+            this.$router.push({
+                path:'comicdetails',
+                query: {
+                    id: id,
+                    name: name,
+                }
+            })
         }
     }
 }
