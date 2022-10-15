@@ -19,7 +19,42 @@
 </template>
 <script>
 export default {
-  created() {},
+  date() {
+    return {
+      nowactive: "city"
+    }
+  },
+  created() {
+    this.getAllDate()
+    if(window.location.pathname=='/'){
+      console.log(localStorage.getItem("mineComic"));
+      if(localStorage.getItem("mineComic") == null) {
+        this.$router.push({
+        path:'city'
+      })
+      } else {
+        this.$router.push({
+        path:'shelf'
+      })
+      }
+      
+    }
+  },
+  methods: {
+    getAllDate() {
+      if (localStorage.getItem("allComic") === null) {
+        this.$axios
+          .get("https://www.kanman.com/api/getComicList")
+          .then(({ data }) => {
+            let allComic = data.data;
+
+            localStorage.setItem("allComic", JSON.stringify(allComic));
+          });
+      } else {
+        return;
+      }
+    },
+  }
 };
 </script>
 
@@ -32,11 +67,16 @@ export default {
   position: fixed;
   bottom: 0px;
   width: 100%;
-  height: 55px;
+  height: calc(100vw / 375 * 55);
+  line-height: calc(100vw / 375 * 55);
+  text-align: center;
+  background-color: #f3f4f6;
+  border-top: calc(100vw / 375 * 1) solid #ccc;
   display: flex;
   justify-content: space-around;
   z-index: 100;
-  background-color: #f3f4f6;
-  border-top: 1px solid #ccc;
+  .router-link-exact-active {
+        color: #fc6976;
+      }
 }
 </style>
