@@ -1,0 +1,145 @@
+/*reset.css*/
+/* http://meyerweb.com/eric/tools/css/reset/ 
+    v2.0 | 20110126
+License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+body {
+    /* 全局改变行高 */
+	line-height: 1;
+}
+
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+input {
+	outline: 0;
+}
+
+
+
+/* 预设样式 begin */
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.clearflow::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+.auto-img{
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.box-img {
+	width: 100%;
+    height: 100%;
+    display: block;
+}
+/* 预设样式 end */
+
+/* nav样式 */
+/* 水平居中均匀排列 */
+/* (需要设置li宽、行高、字体) */
+/* li宽可用width(固定、均匀)或 padding(按元素大小变化) */
+.nav-row-ul {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+.nav-row-ul>li {
+    word-spacing: -1em;
+    height: 100%;
+    float: left;
+}
+.nav-row-ul>li>div {
+    display: inline-block;
+    vertical-align: middle;
+    word-spacing: 0;
+}
+/* 水平居中左右顶点*/
+.nav-row-spaceul {
+	width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around
+}
+.nav-row-spaceul>li, 
+.nav-row-spaceul>li>div {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* 垂直居中均匀排列*/
+/* (需要设置li宽、字体) */
+/* li宽可用width(固定)或 padding(按元素大小变化) */
+.nav-col-ul {
+    width: 100%;
+    height: 100%;
+}
+.nav-col-ul>li {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    float: left;
+}
+/* 垂直居中左右顶点*/
+.nav-col-spaceul {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between
+}
+.nav-col-spaceul>li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    float: left;
+}
