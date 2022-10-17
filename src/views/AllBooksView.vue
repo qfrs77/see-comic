@@ -12,6 +12,7 @@
             </div>
         </div>
         <ComicListComponents :comicListDate="selectComic" />
+        <div v-show="isbottoming">已经到底咯</div>
     </div>
 </template>
 
@@ -258,12 +259,15 @@ export default {
             isFin: "fall",
             word: "wall",
             excessive: [],
-            excessivelength:20
+            excessivelength: 0,
+            selectComic:[],
+            isbottoming:false
         };
     },
 
     created() {
         this.allComic = JSON.parse(localStorage.getItem("allComic"));
+        this.excessive = this.allComic
         this.selectComic = this.allComic.slice(0, 21);
     },
     methods: {
@@ -271,6 +275,8 @@ export default {
             this.$router.go(-1);
         },
         changeClassify(type, value) {
+            this.excessivelength = 0
+            this.isbottoming = false
             if (type == "title") {
                 this.title = value
             }
@@ -314,26 +320,22 @@ export default {
                     return e.comic_newid.slice(0, 1).toUpperCase() == this.word
                 });
             }
-            this.selectComic = this.excessive.slice(0, this.excessivelength)
+            this.selectComic = this.excessive.slice(0, this.excessivelength+21)
             console.log(this.excessive);
             console.log(this.selectComic);
         },
         scrolling() {
-            let boxtop =  this.$refs.box.scrollTop;
-            let scrollheight = this.$refs.box.scrollHeight; 
+            let boxtop = this.$refs.box.scrollTop;
+            let scrollheight = this.$refs.box.scrollHeight;
             let clientheight = this.$refs.box.clientHeight;
-            if(boxtop + clientheight >= scrollheight) {
-                this.excessivelength += 21
-                console.log(this.excessivelength);
-            // this.selectComic = this.excessive.slice(0, this.excessivelength)
-            this.changeClassifyList()
-            console.log(this.selectComic);
-
-
+            if (boxtop + clientheight >= scrollheight - 30) {
+                if(this.excessivelength + 20 >= this.selectComic.length) {
+                    this.isbottoming = true
+                } else {
+                    this.excessivelength += 21
+                    this.selectComic = [...this.selectComic, ...this.excessive.slice(this.excessivelength, this.excessivelength + 21)]
+                }
             }
-            /* console.log(this.$refs.box.scrollTop);
-            console.log(this.$refs.box.scrollHeight);
-            console.log(this.$refs.box.clientHeight); */
         }
     }
 }

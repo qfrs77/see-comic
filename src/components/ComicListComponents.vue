@@ -16,6 +16,11 @@ export default {
 
         }
     },
+    watch:{
+        comicListDate(){
+            console.log("1");
+        }
+    },
     methods: {
         turnToComicDetails(id, name) {
             this.$router.push({
