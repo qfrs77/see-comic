@@ -1,8 +1,10 @@
 <template>
     <div class="search--commponent">
-        <div class="back" @click="back">返回</div>
-        <input type="text" placeholder="搜索漫画名or关键字" v-model="keyword" />
-        <span @click="turnToSearchResult(keyword)">搜索</span>
+        <div class="back" @click="back"><img src="../assets/back.png" alt=""></div>
+        <div class="searchbox">
+            <input type="text" maxlength="40" placeholder="搜索漫画名or关键字" v-model="keyword" />
+            <div class="searchbtn" @click="turnToSearchResult(keyword)"><img src="../assets/search.png" alt=""></div>
+        </div>
     </div>
 </template>
 
@@ -52,31 +54,59 @@ export default {
 <style lang="scss">
 .search--commponent {
     width: 100%;
-    height: calc(100vw / 375 * 46);
+    height: calc(100vw / 375 * 44);
     text-align: center;
     display: flex;
 
     .back {
-        width: calc(100vw / 375 * 46);
-        height: calc(100vw / 375 * 46);
-        line-height: calc(100vw / 375 * 46);
+        width: calc(100vw / 375 * 44);
+        height: calc(100vw / 375 * 44);
+        padding: calc(100vw / 375 * 12) calc(100vw / 375 * 6);
+
+        img {
+            width: calc(100vw / 375 * 32);
+            height: calc(100vw / 375 * 20);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
     }
 
-    input {
-        width: calc(100% - 52px * 2);
-        height: calc(100vw / 375 * 34);
+    .searchbox {
+        width: calc(100vw / 375 * 320);
+        height: calc(100vw / 375 * 32);
+        margin-right: calc(100vw / 375 * 11);
         margin-top: calc(100vw / 375 * 6);
-        padding: 0 calc(100vw / 375 * 6);
-        box-sizing: border-box;
-        outline: none;
-        border: calc(100vw / 375 * 1) solid #fc6976;
-        border-radius: calc(100vw / 375 * 8);
-    }
+        padding: 0 calc(100vw / 375 * 10);
+        position: relative;
 
-    span {
-        width: calc(100vw / 375 * 46);
-        height: calc(100vw / 375 * 46);
-        line-height: calc(100vw / 375 * 46);
+        input {
+            width: calc(100vw / 375 * 300);
+            height: 100%;
+            padding: 0 calc(100vw / 375 * 32) 0 calc(100vw / 375 * 16);
+            border: calc(100vw / 375 * 1) solid #fc6976;
+            border-radius: calc(100vw / 375 * 15);
+            box-sizing: border-box;
+            outline: none;
+            position: relative;
+            z-index: 10;
+        }
+
+        .searchbtn {
+            width: calc(100vw / 375 * 32);
+            height: calc(100vw / 375 * 32);
+            padding: calc(100vw / 375 * 5);
+            position: absolute;
+            top: 0;
+            right: calc(100vw / 375 * 20);
+            z-index: 10;
+
+            img {
+                width: calc(100vw / 375 * 22);
+                height: calc(100vw / 375 * 22);
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+            }
+        }
     }
 }
 </style>

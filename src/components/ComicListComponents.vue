@@ -1,6 +1,5 @@
 <template>
     <div class="comicListbox">
-        <!-- <button @click="test(comicListDate)">click</button> -->
         <div class="comicDate" v-for="j in comicListDate" :key="j.comic_id"
             @click="turnToComicDetails(j.comic_id,j.comic_name)">
             <div><img :src="`https://image.yqmh.com/mh/${j.comic_id}.jpg`" alt=""></div>
@@ -10,16 +9,17 @@
 </template>
 <script>
 export default {
-    props: { comicListDate:Array },
+    props: { comicListDate: Array },
     data() {
         return {
-
+         
         }
     },
-    watch:{
-        comicListDate(){
-            console.log("1");
-        }
+    created() {
+       
+   
+    },
+    watch: {
     },
     methods: {
         turnToComicDetails(id, name) {
@@ -31,10 +31,7 @@ export default {
                 }
             })
         },
-        test(x) {
-            console.log(x);
-        }
-    }
+    },
 }
 </script>
 <style lang="scss">
@@ -43,6 +40,7 @@ export default {
     margin: calc(100vw / 375 * 15) 0;
     padding: 0 calc(100vw / 375 * 15) calc(100vw / 375 * 55) 0;
     display: inline-block;
+    margin-top: calc(100vw / 375 * 44);
 
     .comicDate {
         width: calc(100vw / 375 * 105);

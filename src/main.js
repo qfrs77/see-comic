@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import VueAxiosPlugin from 'vue-axios-plugin'
+import './icons/index';
 
 
 Vue.use(VueAxiosPlugin, {

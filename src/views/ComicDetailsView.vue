@@ -10,7 +10,6 @@
                     <div v-for="i in comicInfo.cartoon_type_list" :key="i.id">{{i.name}}</div>
                 </div>
             </div>
-
             <img class="topimg" :src="'http://image.mhxk.com/mh/'+ this.comicId+'_2_1.jpg-noresize.webp'" />
         </div>
         <div class="desc">
@@ -27,9 +26,18 @@
             </div>
         </div>
         <div class="footer">
-            <div v-if="!ishas" @click="addShelf">加入书架</div>
-            <div v-else @click="delShelf">移出书架</div>
-            <div>开始阅读</div>
+            <div class="btn">
+                <div v-if="!ishas" @click="addShelf">加入书架</div>
+                <div v-else @click="delShelf">移出书架</div>
+            </div>
+            <div class="btn">
+                <div v-if="!isread" @click="firstReading">开始阅读</div>
+                <div class="continuereading" v-else @click="continueReading(chapterId)">
+                    <div>{{chapterName}}</div>
+                    <div>继续阅读</div>
+                </div>
+            </div>
+
         </div>
     </div>
 </template>
@@ -39,20 +47,42 @@ export default {
         return {
             comicId: '',
             comicName: '',
+            chapterName:'',
+            chapterId:'',
             comicInfo: '',
             chapterlist: '',
             chapterinfo: '',
-            chapterId: '',
             mineComic: [],
-            orderShow: true
-
+            orderShow: true,
+            comicReadHistory: [],
+            hasHistory:false
         };
     },
     created() {
         this.comicId = this.$route.query.id
         this.comicName = this.$route.query.name
         this.mineComic = JSON.parse(localStorage.getItem("mineComic")) || [];
+        this.comicReadHistory = JSON.parse(localStorage.getItem("comicReadHistory")) || [];
         console.log(this.$route.query.id);
+        for (let i = 0; i < this.comicReadHistory.length; i++) {
+            console.log(this.comicReadHistory[i]);
+            if (this.comicReadHistory[i].comic_id == this.$route.query.id) {
+                this.chapterName = this.comicReadHistory[i].chapter_name
+                this.chapterId = this.comicReadHistory[i].chapter_id
+                this.hasHistory = true
+                console.log(this.hasHistory);
+            }
+        }
+        console.log(this.hasHistory);
+        if(this.hasHistory==false) {
+            this.comicReadHistory.push({
+                comic_id: this.comicId,
+                comic_name: this.comicName,
+                chapter_name:'',
+                chapter_id:''
+            })
+            localStorage.setItem("comicReadHistory", JSON.stringify(this.comicReadHistory));
+        }
     },
     computed: {
         ishas() {
@@ -63,6 +93,15 @@ export default {
                 }
             })
             return flag
+        },
+        isread() {
+            let flag1 = false
+            this.comicReadHistory.forEach(e => {
+                if (e.comic_id == this.comicId && e.chapter_name != '') {
+                    flag1 = true
+                }
+            })
+            return flag1
         },
         infoURL() {
             return `https://www.kanman.com/api/getComicInfoAttribute?comic_id=${this.comicId}`;
@@ -91,7 +130,7 @@ export default {
             this.$router.go(-1);
         },
         turnToComic(chapterId) {
-            // this.chapterId = chapterId
+            console.log(this.comicId,chapterId);
             this.$router.push({
                 path: '/comic',
                 query: {
@@ -117,6 +156,27 @@ export default {
             this.orderShow = !this.orderShow
             this.chapterlist = this.chapterlist.reverse()
         },
+
+        firstReading() {
+            /* this.$router.push({
+                path: '/comic',
+                query: {
+                    comicId: this.comicId,
+                    chapterId: this.comicInfo.first_chapter_id
+                }
+            }) */
+            console.log(this.comicInfo.first_chapter_id);
+        },
+        continueReading(chapterId) {
+            console.log(this.comicId,chapterId);
+            this.$router.push({
+                path: '/comic',
+                query: {
+                    comicId: this.comicId,
+                    chapterId: chapterId
+                }
+            })
+        }
     }
 }
 </script>
@@ -191,6 +251,7 @@ export default {
         div {
             font-size: calc(100vw/375*12);
             color: #999;
+            line-height: calc(100vw/375*20);
         }
     }
 
@@ -233,20 +294,33 @@ export default {
 
     .footer {
         width: 100%;
-        height: 50px;
+        height: calc(100vw / 375 * 50);
         background-color: black;
         color: white;
-        line-height: 50px;
+        line-height: calc(100vw / 375 * 50);
         display: flex;
         position: fixed;
         left: 0;
         bottom: 0;
 
-        div {
+        .btn {
             width: 50%;
             height: 100%;
             text-align: center;
             background-image: linear-gradient(90deg, #ff6b46, #ff2e67);
+            .continuereading {
+                padding: calc(100vw / 375 * 6) 0;
+                div:nth-of-type(1) {
+                    height: calc(100vw / 375 * 24);
+                    line-height: calc(100vw / 375 * 24);
+                    font-size: calc(100vw / 375 * 14);
+                }
+                div:nth-of-type(2) {
+                    height: calc(100vw / 375 * 16);
+                    line-height: calc(100vw / 375 * 16);
+                    font-size: calc(100vw / 375 * 12);
+                }
+            }
         }
     }
 }
